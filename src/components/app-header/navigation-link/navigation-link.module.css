@@ -1,0 +1,12 @@
+.link {
+    composes: pb-4 pt-4 pl-5 pr-5 text_type_main-default from global;
+
+    display: flex;
+    gap: calc(var(--offset-base-size)  * 2);
+    cursor: pointer;
+    color: var(--text-inactive-color);
+}
+
+.active {
+    color: var(--text-primary-color);
+}

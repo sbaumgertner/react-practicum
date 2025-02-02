@@ -1,0 +1,18 @@
+.main {
+    max-width: 1280px;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: calc(var(--offset-base-size) * 10);;
+}
+
+.loader {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error {
+    padding-top: 100px;
+}
