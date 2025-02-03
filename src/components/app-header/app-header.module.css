@@ -1,17 +1,17 @@
-.header {
-    composes: pb-4 pt-4 from global;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width: 1280px;
-    margin: auto;
+.Header {
+  composes: pb-4 pt-4 from global;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: var(--main-width);
+  margin: auto;
 }
 
-.logo {
-    margin-left: 112px;
+.Logo {
+  margin-left: 112px;
 }
 
-.profile {
-    margin-left: auto;
+.Profile {
+  margin-left: auto;
 }

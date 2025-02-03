@@ -1,73 +1,77 @@
 
-import { useState, useEffect } from 'react'
-import AppHeader from '../app-header/app-header'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
-import styles from './app.module.css'
-import BurgerConstructor from '../burger-constructor/burger-constructor'
-import { BurgerRecipeModel, IngredientModel } from '../../model'
-import Loader from 'react-ts-loaders'
-import sample from 'lodash-es/sample'
-
-const URL = 'https://norma.nomoreparties.space/api/ingredients'
+import { useState, useEffect } from 'react';
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import styles from './app.module.css';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { BurgerRecipeModel, IngredientCountModel, IngredientModel } from '../../model';
+import Loader from 'react-ts-loaders';
+import sample from 'lodash-es/sample';
+import { getIngredients } from '../../utils/burger-api';
 
 function App() {
-    const [error, setError] = useState<string>()
-    const [loading, setLoading] = useState(false)
-    const [ingredients, setIngredients] = useState<IngredientModel[]>([])
-    const [recipe, setRecipe] = useState<BurgerRecipeModel>({stuff: []})
+    const [error, setError] = useState<string>();
+    const [loading, setLoading] = useState(false);
+    const [ingredients, setIngredients] = useState<IngredientModel[]>([]);
+    const [recipe, setRecipe] = useState<BurgerRecipeModel>({stuff: []});
+    const [ingredientsCount, setIngredientsCount] = useState<IngredientCountModel[]>([]);
 
-    function generateComposition(data: IngredientModel[]) {
-      const wrap = sample(data.filter(ingredient => ingredient.type === 'bun'))
-      const stuff: IngredientModel[] = []
+    function generateRecipe() {
+      const ingredientsCountNew:IngredientCountModel[] = [];
+
+      const wrap = sample(ingredients.filter(ingredient => ingredient.type === 'bun'));
+      wrap && ingredientsCountNew.push({id: wrap._id, count: 2});
+
+      const stuff: IngredientModel[] = [];
       Array.from({ length: 7 }).forEach(() => {
-        const random = sample(data.filter(ingredient => ingredient.type !== 'bun'))
-        random && stuff.push(random)
-      })
-      setRecipe({wrap: wrap, stuff: stuff})
-      
-      const ingredientsCount = [...data]
-      const wrapIngredient = ingredientsCount.find(ingredient => ingredient._id === wrap?._id)
-      wrapIngredient && (wrapIngredient.count = 2)
-      stuff.forEach(stuffItem => {
-        const item = ingredientsCount.find(ingredient => ingredient._id === stuffItem?._id)
-        item && (item.count ? item.count++ : item.count = 1)
-      })
-      setIngredients(ingredientsCount)
+        const random = sample(ingredients.filter(ingredient => ingredient.type !== 'bun'));
+        if (random) {
+          stuff.push(random);
+          const ingredientCount = ingredientsCountNew.find(count => count.id === random?._id);
+          ingredientCount ? ingredientCount.count += 1 : ingredientsCountNew.push({id: random._id, count: 1});
+        }
+      });
+      setRecipe({wrap: wrap, stuff: stuff});
+      setIngredientsCount(ingredientsCountNew);
     }
 
     useEffect(() => {
-      const getIngredients = async () => {
+      const getIngredientsData = async () => {
         try {
-          setLoading(true)
-          const res = await fetch(URL)
-          const data = await res.json()
-          generateComposition(data.data)
-          setLoading(false)
+          setError(undefined);
+          setLoading(true);
+          const data = await getIngredients();
+          setIngredients(data.data);
+          setLoading(false);
         }
         catch (error: unknown) {
-          setError((error as Error).message)
-          setLoading(false)
+          setError(error instanceof Error ? error.message : 'Неизвестная ошибка');
+          setLoading(false);
         }
-      }
+      };
   
-      getIngredients()
-    }, [])
+      getIngredientsData();
+    }, []);
+
+    useEffect(() => {
+      generateRecipe();
+    }, [ingredients]);
     
     return (
-      <>
-        {loading && (<section className={styles.loader}><Loader /></section>)}
-        <AppHeader />
-        <main className={styles.main}>
-          {error ? (<p className={styles.error}>Произошла ошибка ({error}). Попробуйте позже.</p>) :
-          (
-            <>
-              <BurgerIngredients ingredients={ingredients} />
-              <BurgerConstructor recipe={recipe} />
-            </>
-          )}
-        </main>
-      </>
-    )
+        loading ? <section className={styles.Loader}><Loader /></section> :
+          <>
+            <AppHeader />
+            <main className={styles.Main}>
+              {error ? (<p className={styles.Error}>Произошла ошибка ({error}). Попробуйте позже.</p>) :
+              (
+                <>
+                  <BurgerIngredients ingredients={ingredients} ingredientsCount={ingredientsCount} />
+                  <BurgerConstructor recipe={recipe} />
+                </>
+              )}
+            </main>
+          </>
+    );
   }
   
-  export default App
+  export default App;

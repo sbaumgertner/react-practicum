@@ -11,7 +11,6 @@ export type IngredientModel = {
     image_mobile: string;
     image_large: string;
     __v: number;
-    count?: number;
 }
 
 export type IngredientGroupModel = {
@@ -19,11 +18,20 @@ export type IngredientGroupModel = {
     name: string;
 }
 
+export type GroupedIngredientModel = IngredientModel & {
+    count?: number;
+}
+
 export type GroupedIngredientsModel = IngredientGroupModel & {
-    ingredients: IngredientModel[];
+    ingredients: GroupedIngredientModel[];
 }
 
 export type BurgerRecipeModel = {
     wrap?: IngredientModel;
     stuff: IngredientModel[];
+}
+
+export type IngredientCountModel = {
+    id: string;
+    count: number;
 }

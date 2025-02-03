@@ -1,18 +1,18 @@
-.main {
-    max-width: 1280px;
+.Main {
+    composes: pb-10 from global;
+    max-width: var(--main-width);
     margin: auto;
     display: flex;
     justify-content: space-around;
-    padding-bottom: calc(var(--offset-base-size) * 10);;
 }
 
-.loader {
+.Loader {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.error {
-    padding-top: 100px;
+.Error {
+    composes: pt-25 from global;
 }

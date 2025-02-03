@@ -1,0 +1,27 @@
+.Modal {
+  composes: pt-10 pr-10 pl-10 pb-15 from global;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1010;
+  padding: calc(var(--offset-base-size)  * 10) calc(var(--offset-base-size)  * 10) calc(var(--offset-base-size)  * 15);
+  background-color: var(--background);
+  border: 1px solid #4C4CFF33;
+  border-radius: var(--common-border-radius-s);
+  box-shadow: 0px 0px 1px 0px #0000000A;
+  box-shadow: 0px 4px 8px 0px #0000000A;
+  box-shadow: 0px 16px 24px 0px #0000000A;
+  box-shadow: 0px 24px 32px 0px #0000000A;
+}
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 64px;
+}
+
+.Close {
+  cursor: pointer;
+}
