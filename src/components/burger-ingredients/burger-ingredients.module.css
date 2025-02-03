@@ -1,6 +1,6 @@
 .Section {
   width: 600px;
-  max-height: max(calc(100vh - 128px), 500px);
+  max-height: calc(100vh - 128px);
   display: flex;
   flex-direction: column;
 }

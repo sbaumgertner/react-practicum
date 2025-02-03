@@ -1,6 +1,6 @@
 .Link {
   composes: pb-4 pt-4 pl-5 pr-5 text_type_main-default from global;
-  composes: text_color_inactive from global;
+  color: var(--text-inactive-color);
 
   display: flex;
   gap: calc(var(--offset-base-size)  * 2);
@@ -8,5 +8,5 @@
 }
 
 .Active {
-  composes: text_color_primary from global;
+  color: var(--text-primary-color);
 }

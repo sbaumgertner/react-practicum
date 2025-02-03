@@ -30,7 +30,7 @@ function BurgerConstructor({recipe}: BurgerConstructorProps) {
       {recipe.wrap && (<ConstructorElement
         type="top"
         isLocked={true}
-        text={recipe.wrap.name}
+        text={recipe.wrap.name + ' (верх)'}
         price={recipe.wrap.price}
         thumbnail={recipe.wrap.image}
         extraClass="ml-8 mb-4"
@@ -52,7 +52,7 @@ function BurgerConstructor({recipe}: BurgerConstructorProps) {
       {recipe.wrap && (<ConstructorElement
         type="bottom"
         isLocked={true}
-        text={recipe.wrap.name}
+        text={recipe.wrap.name + ' (низ)'}
         price={recipe.wrap.price}
         thumbnail={recipe.wrap.image}
         extraClass="ml-8 mt-4"

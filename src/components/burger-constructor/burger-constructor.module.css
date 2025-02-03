@@ -1,7 +1,7 @@
 .Section {
   composes: pt-25 pr-2 pl-2 pb-13 from global;
   width: 600px;
-  max-height: max(calc(100vh - 128px), 500px);
+  max-height: calc(100vh - 228px);
   display: flex;
   flex-direction: column;
 }
