@@ -1,0 +1,17 @@
+.Ingredient {
+  display: flex;
+  flex-direction: column;
+  gap: var(--offset-base-size);
+  align-items: center;
+  position: relative;
+  width: 272px;
+  height: 208px;
+  cursor: pointer;
+}
+
+.Price {
+  composes: text_type_digits-default from global;
+  display: flex;
+  gap: calc(var(--offset-base-size) * 2);
+  align-items: center;
+}

@@ -1,0 +1,22 @@
+.Details {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: calc(var(--offset-base-size)  * 4);
+  min-width: 520px;
+}
+
+.NutritionalDetails {
+  composes: mt-4 from global;
+  display: flex;
+  gap: calc(var(--offset-base-size)  * 5);
+}
+
+.NutritionalValue {
+  composes: text_color_inactive from global;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--offset-base-size)  * 2);
+  align-items: center;
+}

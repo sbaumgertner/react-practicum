@@ -1,0 +1,24 @@
+.Section {
+  width: 600px;
+  max-height: calc(100vh - 128px);
+  display: flex;
+  flex-direction: column;
+}
+
+.Header {
+  composes: pt-10 from global;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--offset-base-size) * 5);
+}
+
+.Nav {
+  display: flex;
+}
+
+.Groups {
+  composes: custom-scroll pt-10 from global;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}

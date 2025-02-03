@@ -1,0 +1,22 @@
+.Details {
+  composes: pt-4 pl-15 pr-15 pb -15 from global;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Number {
+  composes: text_type_digits-large from global;
+}
+
+.NumberTitle {
+  composes: text_type_main-medium mt-8 from global;
+}
+
+.DoneImg {
+  composes: mt-15 mb-15 from global;
+}
+
+.DoneText {
+  composes: text_color_inactive from global;
+}

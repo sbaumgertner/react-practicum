@@ -1,0 +1,17 @@
+.Header {
+  composes: pb-4 pt-4 from global;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: var(--main-width);
+  margin: auto;
+}
+
+.Logo {
+  margin-left: 112px;
+}
+
+.Profile {
+  margin-left: auto;
+}

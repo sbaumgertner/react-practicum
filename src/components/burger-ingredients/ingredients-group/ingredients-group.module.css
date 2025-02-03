@@ -1,0 +1,8 @@
+.List {
+  composes: pt-6 pl-2 pr-2 pb-10 from global;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  row-gap: calc(var(--offset-base-size) * 8);
+  column-gap: calc(var(--offset-base-size) * 6);
+}

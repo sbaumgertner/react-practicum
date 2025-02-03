@@ -1,0 +1,40 @@
+.Section {
+  composes: pt-25 pr-2 pl-2 pb-13 from global;
+  width: 600px;
+  max-height: calc(100vh - 228px);
+  display: flex;
+  flex-direction: column;
+}
+
+.StuffList {
+  composes: custom-scroll from global;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--offset-base-size) * 4) 0;
+  overflow-y: scroll;
+}
+
+.StuffItem {
+  display: flex;
+  gap: calc(var(--offset-base-size) * 2);
+  align-items: center;
+}
+
+.Order {
+  composes: mt-10 mr-6 from global;
+  display: flex;
+  justify-content: end;
+  gap: calc(var(--offset-base-size) * 10);
+}
+
+.Price {
+  composes: text_type_digits-medium from global;
+  display: flex;
+  align-items: center;
+  gap: calc(var(--offset-base-size) * 2);
+
+  svg {
+      width: 36px;
+      height: 36px;
+  }
+}
