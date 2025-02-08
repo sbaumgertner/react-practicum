@@ -26,6 +26,6 @@ export type ConstructorIngredientModel = IngredientModel & {
 }
 
 export type BurgerRecipeModel = {
-  wrap?: IngredientModel;
+  wrap?: ConstructorIngredientModel;
   stuff: ConstructorIngredientModel[];
 }

@@ -29,7 +29,7 @@ function BurgerConstructor() {
   function onDropHandler(id: string) {
     const ingredient = ingredients.find(ingredient => ingredient._id === id);
     if (ingredient){
-      dispatch(addIngredient({ ingredient }));
+      dispatch(addIngredient(ingredient));
     }
   }
 

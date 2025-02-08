@@ -1,5 +1,5 @@
 import { createSelector, createSlice, nanoid, PayloadAction } from "@reduxjs/toolkit";
-import { BurgerRecipeModel, IngredientModel } from "../../model";
+import { BurgerRecipeModel, ConstructorIngredientModel, IngredientModel } from "../../model";
 
 const initialState: {recipe: BurgerRecipeModel} = {
     recipe: {
@@ -11,24 +11,30 @@ export const burgerConstructorSlice = createSlice({
     name: "burgerConstructor",
     initialState,
     reducers: {
-        addIngredient(state, action: PayloadAction<{ingredient: IngredientModel}>){
-          if (action.payload.ingredient.type === 'bun') {
-            state.recipe.wrap = action.payload.ingredient;
+      addIngredient: {
+        reducer: (state, action: PayloadAction<ConstructorIngredientModel>) => {
+          if (action.payload.type === 'bun') {
+            state.recipe.wrap = action.payload;
           }
           else {
-            state.recipe.stuff.push({...action.payload.ingredient, uid: nanoid()});
+            state.recipe.stuff.push(action.payload);
           }
         },
-        deleteIngredient(state, action: PayloadAction<{uid: string}>){
-          state.recipe.stuff = state.recipe.stuff.filter(ingredient => ingredient.uid !== action.payload.uid);
-        },
-        moveIngredient(state, action: PayloadAction<{uidFrom: string, uidTo: string}>){
-          const stuff = [...state.recipe.stuff];
-          const toIndex = stuff.findIndex(ingredient => ingredient.uid === action.payload.uidTo);
-          const fromIndex = stuff.findIndex(ingredient => ingredient.uid === action.payload.uidFrom);
-          stuff.splice(toIndex, 0, stuff.splice(fromIndex, 1)[0]);
-          state.recipe.stuff = stuff;
+        prepare: (ingredient: IngredientModel) => {
+          const uid = nanoid();
+          return { payload: {...ingredient, uid} };
         }
+      },
+      deleteIngredient(state, action: PayloadAction<{uid: string}>){
+        state.recipe.stuff = state.recipe.stuff.filter(ingredient => ingredient.uid !== action.payload.uid);
+      },
+      moveIngredient(state, action: PayloadAction<{uidFrom: string, uidTo: string}>){
+        const stuff = [...state.recipe.stuff];
+        const toIndex = stuff.findIndex(ingredient => ingredient.uid === action.payload.uidTo);
+        const fromIndex = stuff.findIndex(ingredient => ingredient.uid === action.payload.uidFrom);
+        stuff.splice(toIndex, 0, stuff.splice(fromIndex, 1)[0]);
+        state.recipe.stuff = stuff;
+      }
     },
     selectors: {
       getRecipe: state => state.recipe,

@@ -10,7 +10,7 @@ type ModalProps = {
   onClose: () => void;
 }
 
-const modalRoot = document.getElementById('root') as HTMLElement;
+const modalRoot = document.getElementById('modals') as HTMLElement;
 
 function Modal({header, children, onClose}: ModalProps) {
 
