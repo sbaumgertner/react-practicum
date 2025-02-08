@@ -1,76 +1,44 @@
 
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { BurgerRecipeModel, IngredientCountModel, IngredientModel } from '../../model';
 import Loader from 'react-ts-loaders';
-import sample from 'lodash-es/sample';
-import { getIngredients } from '../../utils/burger-api';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredientsError, getIngredientsLoading } from '../../services/ingredients/reducer';
+import { loadIngredients } from '../../services/ingredients/action';
+import { AppDispatch } from '../../main';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 function App() {
-    const [error, setError] = useState<string>();
-    const [loading, setLoading] = useState(false);
-    const [ingredients, setIngredients] = useState<IngredientModel[]>([]);
-    const [recipe, setRecipe] = useState<BurgerRecipeModel>({stuff: []});
-    const [ingredientsCount, setIngredientsCount] = useState<IngredientCountModel[]>([]);
+    const dispatch = useDispatch<AppDispatch>();
+    const loading = useSelector(getIngredientsLoading);
+    const error = useSelector(getIngredientsError);
 
-    function generateRecipe() {
-      const ingredientsCountNew:IngredientCountModel[] = [];
+    useEffect(() => {
+      dispatch(loadIngredients());
+    }, [dispatch]);
 
-      const wrap = sample(ingredients.filter(ingredient => ingredient.type === 'bun'));
-      wrap && ingredientsCountNew.push({id: wrap._id, count: 2});
-
-      const stuff: IngredientModel[] = [];
-      Array.from({ length: 7 }).forEach(() => {
-        const random = sample(ingredients.filter(ingredient => ingredient.type !== 'bun'));
-        if (random) {
-          stuff.push(random);
-          const ingredientCount = ingredientsCountNew.find(count => count.id === random?._id);
-          ingredientCount ? ingredientCount.count += 1 : ingredientsCountNew.push({id: random._id, count: 1});
-        }
-      });
-      setRecipe({wrap: wrap, stuff: stuff});
-      setIngredientsCount(ingredientsCountNew);
+    if (loading) {
+      return (<section className={styles.Loader}><Loader /></section>);
     }
 
-    useEffect(() => {
-      const getIngredientsData = async () => {
-        try {
-          setError(undefined);
-          setLoading(true);
-          const data = await getIngredients();
-          setIngredients(data.data);
-          setLoading(false);
-        }
-        catch (error: unknown) {
-          setError(error instanceof Error ? error.message : 'Неизвестная ошибка');
-          setLoading(false);
-        }
-      };
-  
-      getIngredientsData();
-    }, []);
-
-    useEffect(() => {
-      generateRecipe();
-    }, [ingredients]);
+    if (error) {
+      return (<p className={styles.Error}>Произошла ошибка ({error}). Попробуйте позже.</p>);
+    }
     
     return (
-        loading ? <section className={styles.Loader}><Loader /></section> :
-          <>
-            <AppHeader />
-            <main className={styles.Main}>
-              {error ? (<p className={styles.Error}>Произошла ошибка ({error}). Попробуйте позже.</p>) :
-              (
-                <>
-                  <BurgerIngredients ingredients={ingredients} ingredientsCount={ingredientsCount} />
-                  <BurgerConstructor recipe={recipe} />
-                </>
-              )}
-            </main>
-          </>
+      <>
+        <AppHeader />
+        <DndProvider backend={HTML5Backend}>
+          <main className={styles.Main}>
+            <BurgerIngredients />
+            <BurgerConstructor />
+          </main>
+        </DndProvider>
+      </>
     );
   }
   

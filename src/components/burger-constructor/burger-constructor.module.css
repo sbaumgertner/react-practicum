@@ -14,12 +14,6 @@
   overflow-y: scroll;
 }
 
-.StuffItem {
-  display: flex;
-  gap: calc(var(--offset-base-size) * 2);
-  align-items: center;
-}
-
 .Order {
   composes: mt-10 mr-6 from global;
   display: flex;
@@ -37,4 +31,10 @@
       width: 36px;
       height: 36px;
   }
+}
+
+.Placeholder {
+  height: 100%;
+  align-content: center;
+  text-align: center;
 }
