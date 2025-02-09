@@ -1,0 +1,6 @@
+.StuffItem {
+  display: flex;
+  gap: calc(var(--offset-base-size) * 2);
+  align-items: center;
+  cursor: pointer;
+}

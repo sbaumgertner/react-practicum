@@ -1,16 +1,24 @@
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './ingredient-item.module.css';
+import { useDrag } from 'react-dnd';
 
 type IngredientItemProps = {
+  id: string;
+  type?: string;
   image: string;
   name: string;
   price: number;
   count?: number;
 }
 
-function IngredientItem({image, name, price, count = 0}: IngredientItemProps) {
+function IngredientItem({id, image, name, price, count = 0}: IngredientItemProps) {
+  const [, dragRef] = useDrag({
+    type: 'ingredient',
+    item: {id}
+  });
+
   return (
-    <div className={styles.Ingredient}>
+    <div ref={dragRef} className={styles.Ingredient}>
       <img src={image} alt={name} />
       <div className={styles.Price}>
         <span>{price}</span>

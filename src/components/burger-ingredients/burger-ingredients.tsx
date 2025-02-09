@@ -1,82 +1,74 @@
 import styles from './burger-ingredients.module.css';
-import { IngredientModel, IngredientGroupModel, GroupedIngredientsModel, IngredientCountModel, GroupedIngredientModel } from '../../model';
+import { tabs, TabType } from '../../model';
 import IngredientsGroup from './ingredients-group/ingredients-group';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import Modal from '../modal/modal';
 import IngredientDetails from './ingredient-details/ingredient-details';
+import { useDispatch, useSelector } from 'react-redux';
+import { getIngredient, resetIngredient } from '../../services/ingredient-details/reducer';
 
-type BurgerIngredientProps = {
-  ingredients: IngredientModel[];
-  ingredientsCount: IngredientCountModel[];
-}
+function BurgerIngredients() {
+  const [currentTab, setCurrentTab] = useState<TabType>('bun');
 
-const tabs: IngredientGroupModel[] = [
-  {type: 'bun', name: 'Булки'},
-  {type: 'main', name: 'Начинки'},
-  {type: 'sauce', name: 'Соусы'}
-];
+  const groupsRefs = new Map();
+  groupsRefs.set('bun', useRef(null));
+  groupsRefs.set('main', useRef(null));
+  groupsRefs.set('sauce', useRef(null));
+  const tabsRef = useRef<HTMLElement>(null);
 
-function BurgerIngredients({ingredients, ingredientsCount}: BurgerIngredientProps) {
-  const [groups, setGroups] = useState<GroupedIngredientsModel[]>([]);
-  const [tab, setTab] = useState(tabs[0].type);
-  const [ingredientDetails, setIngredientDetails] = useState<IngredientModel>();
+  const tabsRect = tabsRef?.current?.getBoundingClientRect();
+  const tabsY = (tabsRect?.y || 0) + (tabsRect?.height || 0);
 
-  function groupIngredients(): GroupedIngredientsModel[] {
-    const countedIngredients: GroupedIngredientModel[] = ingredients.map(ingredient => 
-      {
-        const count = ingredientsCount.find(ingredientCnt => ingredientCnt.id === ingredient._id)?.count || 0;
-        return {...ingredient, count};
-    });
-    return countedIngredients.reduce(
-      (groups: GroupedIngredientsModel[], ingredient) => {
-        const group = groups.find((group) => group.type === ingredient.type);
-        if (group) {
-          group.ingredients.push(ingredient);
-        } else {
-          const groupName: string = tabs.find(tab => tab.type === ingredient.type)?.name || '';
-          groups.push({type: ingredient.type, name: groupName, ingredients: [ingredient]});
-        }
-        return groups;
-      },
-      []
-    );
-  }
+  const dispatch = useDispatch();
+  const currentIngredient = useSelector(getIngredient);
 
   const closeModal = () => {
-    setIngredientDetails(undefined);
+    dispatch(resetIngredient());
   }
 
-  const showModal = (id: string) => {
-    setIngredientDetails(ingredients.find((ingredient => ingredient._id === id)));
+  function onScroll() {
+    let minDistance: number | null = null;
+    let currentType: TabType = currentTab;
+    groupsRefs.forEach((ref, type) => {
+      const dist = Math.abs((ref.current?.getBoundingClientRect().y || 0) - tabsY);
+      if (minDistance === null || dist < minDistance) {
+        minDistance = dist;
+        currentType = type;
+      }
+    })
+    if (currentTab !== currentType) {
+      setCurrentTab(currentType);
+    }
   }
 
-  useEffect(() => {
-    setGroups(groupIngredients());
-  }, [ingredients]);
+  function onTabClick(tab: TabType) {
+    setCurrentTab(tab);
+    groupsRefs.get(tab)?.current?.scrollIntoView();
+  }
 
   return (
     <section className={styles.Section}>
       <header className={styles.Header}>
         <h1>Соберите бургер</h1>
-        <nav className={styles.Nav}>
-          {groups.map((group) => (
-            <Tab key={group.type} value={group.type} active={group.type === tab} onClick={setTab}>
-              {group.name}
-            </Tab>
+        <nav ref={tabsRef} className={styles.Nav}>
+          {Array.from(tabs.entries()).map(([type, name]) => (
+              <Tab key={type} value={type} active={type === currentTab} onClick={() => onTabClick(type)}>
+                {name}
+              </Tab>
           ))}
         </nav>
       </header>
-      <ul className={styles.Groups}>
-        {groups.map((group) => (
-          <li key={group.type}>
-            <IngredientsGroup type={group.name} ingredients={group.ingredients} onIngredientClick={showModal} />
+      <ul className={styles.Groups} onScroll={onScroll}>
+        {Array.from(tabs.keys()).map(type => (
+          <li ref={groupsRefs.get(type)} key={type}>
+            <IngredientsGroup type={type} />
           </li>
         ))}  
       </ul>
-      {ingredientDetails && (
+      {currentIngredient && (
         <Modal header='Детали ингредиента' onClose={closeModal}>
-          <IngredientDetails ingredient={ingredientDetails} />
+          <IngredientDetails />
         </Modal>)
       }
     </section>

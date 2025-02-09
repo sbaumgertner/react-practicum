@@ -1,25 +1,36 @@
 import styles from "./ingredients-group.module.css";
-import { GroupedIngredientModel } from "../../../model";
+import { IngredientModel, TabType, tabs } from "../../../model";
 import IngredientItem from "../ingredient-item/ingredient-item";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngredientsByType, IngredientsState } from "../../../services/ingredients/reducer";
+import { setIngredient } from "../../../services/ingredient-details/reducer";
+import { getIngredientsCount } from "../../../services/constructor/reducer";
 
-type IngredientsGroupProps = {
-  type: string;
-  ingredients: GroupedIngredientModel[];
-  onIngredientClick: (id: string)=>void;
-}
+function IngredientsGroup({ type }: {type: TabType}) {
 
-function IngredientsGroup({type, ingredients, onIngredientClick}: IngredientsGroupProps) {
+  const dispatch = useDispatch();
+  const ingredients = useSelector<{ingredients: IngredientsState}, IngredientModel[]>(
+    state => getIngredientsByType(state, type)
+  );
+  const ingredientsCount = useSelector(getIngredientsCount);
+
+  function showIngredientDetails(ingredient: IngredientModel){
+    dispatch(setIngredient({ingredient: ingredient}));
+  }
+
   return (
     <div>
-      <h2>{type}</h2>
+      <h2>{tabs.get(type)}</h2>
       <ul className={styles.List}>
         {ingredients.map((ingredient) => (
-          <li key={ingredient._id} onClick={() => onIngredientClick(ingredient._id)}>
-            <IngredientItem  
+          <li key={ingredient._id} onClick={() => showIngredientDetails(ingredient)}>
+            <IngredientItem
+              id={ingredient._id}
+              type={ingredient.type}
               image={ingredient.image} 
               name={ingredient.name}
               price={ingredient.price} 
-              count={ingredient.count}
+              count={ingredientsCount.get(ingredient._id)}
             />
           </li>
         ))}

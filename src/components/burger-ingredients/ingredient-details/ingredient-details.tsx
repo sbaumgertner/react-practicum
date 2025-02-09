@@ -1,12 +1,11 @@
-import { IngredientModel } from '../../../model';
+import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
+import { getIngredient } from '../../../services/ingredient-details/reducer';
 
-type IngredientDetailsProp = {
-  ingredient: IngredientModel;
-}
-
-function IngredientDetails({ingredient}: IngredientDetailsProp) {
+function IngredientDetails() {
+  const ingredient = useSelector(getIngredient);
   return (
+    ingredient &&
     <div className={styles.Details}>
       <img src={ingredient.image_large} alt={ingredient.name} />
       <h2>{ingredient.name}</h2>
