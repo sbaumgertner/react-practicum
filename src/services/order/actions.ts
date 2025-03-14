@@ -1,24 +1,26 @@
 import { api } from "../../utils/burger-api";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getAccessToken, updateTokens } from "../../utils/tokens";
+import { OrderModel } from "../../model";
 
 export const createOrder = createAsyncThunk(
   'order/createOrder',
-  async (ingredients: string[]) => {
+  async (ingredients: string[]): Promise<OrderModel | undefined> => {
     const token = getAccessToken();
-    let order;
     if (token) {
       try {
-        order = await api.createOrder(ingredients, token);
+        const {name, order: {number}} = await api.createOrder(ingredients, token);
+        return {name, order: {number}}
       }
       catch {
         updateTokens();
         const newToken = getAccessToken();
         if (newToken) {
-          order = await api.createOrder(ingredients, token);
+          const {name, order: {number}} = await api.createOrder(ingredients, token);
+          return {name, order: {number}}
         }
       }
     }
-    return order;
+    return undefined;
   }
 );

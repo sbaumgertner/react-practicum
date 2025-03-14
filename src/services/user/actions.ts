@@ -2,13 +2,13 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api } from '../../utils/burger-api';
 import { LoginData, UserData } from '../../model';
 import { setIsAuthChecked, setUser } from './reducer';
-import { getAccessToken, removeTokens, setTokens, TokensResponse, updateTokens } from '../../utils/tokens';
+import { getAccessToken, removeTokens, setTokens, updateTokens } from '../../utils/tokens';
 
 export const register = createAsyncThunk(
   'user/register',
   async (data: UserData) => {
     const response = await api.register(data);
-    setTokens(response as TokensResponse);
+    setTokens(response);
     return response;
   }
 );
@@ -17,7 +17,7 @@ export const login = createAsyncThunk(
   'user/login',
   async (data: LoginData) => {
     const response = await api.login(data);
-    setTokens(response as TokensResponse);
+    setTokens(response);
     return response;
   }
 );
