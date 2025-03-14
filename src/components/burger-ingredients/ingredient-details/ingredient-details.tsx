@@ -1,9 +1,13 @@
 import { useSelector } from 'react-redux';
 import styles from './ingredient-details.module.css';
-import { getIngredient } from '../../../services/ingredient-details/reducer';
+import { getIngredientById, IngredientsState } from '../../../services/ingredients/reducer';
+import { IngredientModel } from '../../../model';
 
-function IngredientDetails() {
-  const ingredient = useSelector(getIngredient);
+function IngredientDetails({id}: {id: string}) {
+  const ingredient = useSelector<{ingredients: IngredientsState}, IngredientModel | undefined>(
+    state => getIngredientById(state, id)
+  );
+
   return (
     ingredient &&
     <div className={styles.Details}>

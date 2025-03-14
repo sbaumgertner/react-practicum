@@ -3,10 +3,6 @@ import { tabs, TabType } from '../../model';
 import IngredientsGroup from './ingredients-group/ingredients-group';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useRef, useState } from 'react';
-import Modal from '../modal/modal';
-import IngredientDetails from './ingredient-details/ingredient-details';
-import { useDispatch, useSelector } from 'react-redux';
-import { getIngredient, resetIngredient } from '../../services/ingredient-details/reducer';
 
 function BurgerIngredients() {
   const [currentTab, setCurrentTab] = useState<TabType>('bun');
@@ -19,13 +15,6 @@ function BurgerIngredients() {
 
   const tabsRect = tabsRef?.current?.getBoundingClientRect();
   const tabsY = (tabsRect?.y || 0) + (tabsRect?.height || 0);
-
-  const dispatch = useDispatch();
-  const currentIngredient = useSelector(getIngredient);
-
-  const closeModal = () => {
-    dispatch(resetIngredient());
-  }
 
   function onScroll() {
     let minDistance: number | null = null;
@@ -66,10 +55,10 @@ function BurgerIngredients() {
           </li>
         ))}  
       </ul>
-      {currentIngredient && (
-        <Modal header='Детали ингредиента' onClose={closeModal}>
-          <IngredientDetails />
-        </Modal>)
+      {//currentIngredient && (
+      // <Modal header='Детали ингредиента' onClose={closeModal}>
+      //    <IngredientDetails />
+      //  </Modal>)
       }
     </section>
   )
