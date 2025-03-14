@@ -1,0 +1,48 @@
+.Content {
+  display: flex;
+  gap: 60px;
+  width: fit-content;
+  padding-top: calc(var(--offset-base-size) * 30);;
+}
+
+.NavWrap {
+  max-width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+.Nav {
+  composes: text_type_main-medium from global;
+  display: flex;
+  flex-direction: column;
+}
+
+.NavLink {
+  text-decoration: none;
+  line-height: 64px;
+  color: var(--text-inactive-color);
+  cursor: pointer;
+}
+
+.NavLinkActive {
+  text-decoration: none;
+  line-height: 64px;
+  color: var(--text-primary-color);
+}
+
+.Inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.Outlet {
+  width: 480px;
+}
+
+.Buttons {
+  align-self: center;
+  display: flex;
+  gap: 24px;
+}

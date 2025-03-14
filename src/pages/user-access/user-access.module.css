@@ -1,0 +1,32 @@
+.Wrap {
+  margin: 180px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+  text-align: center;
+}
+
+.Form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.Links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.LinkDescription {
+  display: flex;
+  gap: 8px;
+}
+
+.Success {
+  text-align: center;
+  margin: 180px auto;
+}

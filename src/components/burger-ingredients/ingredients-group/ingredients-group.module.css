@@ -5,3 +5,7 @@
   row-gap: calc(var(--offset-base-size) * 8);
   column-gap: calc(var(--offset-base-size) * 6);
 }
+
+.Link {
+  text-decoration: none;
+}

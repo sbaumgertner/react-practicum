@@ -29,3 +29,19 @@ export type BurgerRecipeModel = {
   wrap?: ConstructorIngredientModel;
   stuff: ConstructorIngredientModel[];
 }
+
+export type UserModel = {
+  name: string;
+  email: string;
+}
+
+export type UserData = {
+  email?: string;
+  password: string;
+  name?: string;
+}
+
+export type LoginData = {
+  email: string;
+  password: string;
+}

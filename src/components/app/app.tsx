@@ -1,45 +1,59 @@
 
-import { useEffect } from 'react';
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import styles from './app.module.css';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import Loader from 'react-ts-loaders';
-import { useDispatch, useSelector } from 'react-redux';
-import { getIngredientsError, getIngredientsLoading } from '../../services/ingredients/reducer';
-import { loadIngredients } from '../../services/ingredients/action';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { MainPage } from '../../pages/main/main';
+import { LoginPage } from '../../pages/user-access/login';
+import { RegisterPage } from '../../pages/user-access/register';
+import { NotFoundPage } from '../../pages/not-found/not-found';
+import { ForgotPasswordPage } from '../../pages/user-access/forgot-password';
+import { ResetPasswordPage } from '../../pages/user-access/reset-password';
+import { ProfilePage } from '../../pages/profile/profile';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { checkUserAuth } from '../../services/user/actions';
 import { AppDispatch } from '../../main';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { OnlyAuth, OnlyUnAuth } from '../protected-route';
+import { IngredientPage } from '../../pages/ingredient/ingredient';
+import { IngredientModal } from '../../pages/ingredient/ingredient-modal';
+import { AccountPage } from '../../pages/profile/account';
 
 function App() {
-    const dispatch = useDispatch<AppDispatch>();
-    const loading = useSelector(getIngredientsLoading);
-    const error = useSelector(getIngredientsError);
+  const dispatch = useDispatch<AppDispatch>();
+  const location = useLocation();
+  const state = location.state as {backgroundLocation?: Location};
 
-    useEffect(() => {
-      dispatch(loadIngredients());
-    }, [dispatch]);
-
-    if (loading) {
-      return (<section className={styles.Loader}><Loader /></section>);
-    }
-
-    if (error) {
-      return (<p className={styles.Error}>Произошла ошибка ({error}). Попробуйте позже.</p>);
-    }
+  useEffect(() => {
+    dispatch(checkUserAuth());
+  }, [dispatch]);
     
-    return (
-      <>
-        <AppHeader />
-        <DndProvider backend={HTML5Backend}>
-          <main className={styles.Main}>
-            <BurgerIngredients />
-            <BurgerConstructor />
-          </main>
-        </DndProvider>
-      </>
-    );
-  }
-  
-  export default App;
+  return (
+    <>
+      <AppHeader />
+      <DndProvider backend={HTML5Backend}>
+        {state?.backgroundLocation && (
+          <Routes>
+            <Route path="/ingredients/:id" element={<IngredientModal />} />
+          </Routes>
+        )}
+        <Routes location={state?.backgroundLocation || location}>
+          <Route path="/" element={<MainPage />} />
+          <Route path="ingredients/:id" element={<IngredientPage />} />
+          <Route path="/login" element={<OnlyUnAuth component={<LoginPage/>} />} />
+          <Route path="/register" element={<OnlyUnAuth component={<RegisterPage />} />} />
+          <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPasswordPage />} />} />
+          <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPasswordPage />} />} />
+          <Route path="/profile" element={<OnlyAuth component={<ProfilePage />} />}>
+            <Route index element={<OnlyAuth component={<AccountPage />} />} />
+            <Route path="account" element={<OnlyAuth component={<AccountPage />} />} />
+            <Route path="orders" element={<OnlyAuth component={<div></div>} />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />}/>
+        </Routes>
+      </DndProvider>
+    </>
+  );
+}
+
+export default App;

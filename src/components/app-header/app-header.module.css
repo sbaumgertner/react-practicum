@@ -8,6 +8,10 @@
   margin: auto;
 }
 
+.NavLink {
+  text-decoration: none;
+}
+
 .Logo {
   margin-left: 112px;
 }

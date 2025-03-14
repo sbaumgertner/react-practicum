@@ -10,14 +10,18 @@ import { getAllIngredients } from '../../services/ingredients/reducer';
 import { createOrder } from '../../services/order/actions';
 import { AppDispatch } from '../../main';
 import ConstructorIngredient from './constructor-ingredient/constructor-ingredient';
+import { getUser } from '../../services/user/reducer';
+import { useNavigate } from 'react-router-dom';
 
 function BurgerConstructor() {
   const [showOrderDetails, setShowOrderDetails] = useState(false);
   
+  const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
   const recipe = useSelector(getRecipe);
   const ingredients = useSelector(getAllIngredients);
   const price = useSelector(getPrice);
+  const user = useSelector(getUser);
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
@@ -38,6 +42,9 @@ function BurgerConstructor() {
   }
 
   const createBurgerOrder = () => {
+    if (!user) {
+      navigate('/login');
+    }
     const orderIngredients: string[] = (recipe.wrap ? [recipe.wrap?._id] : []).
       concat(recipe.stuff.map(ingredient => ingredient._id), recipe.wrap ? [recipe.wrap?._id] : []);
     dispatch(createOrder(orderIngredients));
