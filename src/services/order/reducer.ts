@@ -1,11 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createOrder } from "./actions";
-
-type OrderModel = {
-  name: string;
-  order: {number: number};
-  success: boolean;
-}
+import { OrderModel } from "../../model";
 
 export type OrderState = {
   order?: OrderModel;

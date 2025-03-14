@@ -45,3 +45,8 @@ export type LoginData = {
   email: string;
   password: string;
 }
+
+export type OrderModel = {
+  name: string;
+  order: {number: number};
+}

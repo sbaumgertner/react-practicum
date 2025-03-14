@@ -8,7 +8,7 @@ import { useRef } from 'react';
 
 function ConstructorIngredient({ingredient}: {ingredient: ConstructorIngredientModel}) {
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLLIElement>(null);
 
   const [{isOver}, drop] = useDrop({
     accept: 'constructorIngredient',

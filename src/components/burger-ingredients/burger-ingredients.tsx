@@ -2,15 +2,15 @@ import styles from './burger-ingredients.module.css';
 import { tabs, TabType } from '../../model';
 import IngredientsGroup from './ingredients-group/ingredients-group';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useRef, useState } from 'react';
+import { RefObject, useRef, useState } from 'react';
 
 function BurgerIngredients() {
   const [currentTab, setCurrentTab] = useState<TabType>('bun');
 
-  const groupsRefs = new Map();
-  groupsRefs.set('bun', useRef(null));
-  groupsRefs.set('main', useRef(null));
-  groupsRefs.set('sauce', useRef(null));
+  const groupsRefs = new Map<TabType, RefObject<HTMLLIElement>>();
+  groupsRefs.set('bun', useRef<HTMLLIElement>(null));
+  groupsRefs.set('main', useRef<HTMLLIElement>(null));
+  groupsRefs.set('sauce', useRef<HTMLLIElement>(null));
   const tabsRef = useRef<HTMLElement>(null);
 
   const tabsRect = tabsRef?.current?.getBoundingClientRect();
@@ -55,11 +55,6 @@ function BurgerIngredients() {
           </li>
         ))}  
       </ul>
-      {//currentIngredient && (
-      // <Modal header='Детали ингредиента' onClose={closeModal}>
-      //    <IngredientDetails />
-      //  </Modal>)
-      }
     </section>
   )
 }

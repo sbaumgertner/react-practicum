@@ -8,7 +8,7 @@ type ProtectedProps = {
   component: React.JSX.Element;
 }
 
-const Protected = ({ onlyUnAuth = false, component}: ProtectedProps): React.JSX.Element => {
+const Protected = ({ onlyUnAuth = false, component}: ProtectedProps) => {
   const isAuthChecked = useSelector(getIsAuthChecked);
   const user = useSelector(getUser);
   const location = useLocation();
@@ -18,7 +18,7 @@ const Protected = ({ onlyUnAuth = false, component}: ProtectedProps): React.JSX.
   }
 
   if (onlyUnAuth && user) {
-      const { from } = location.state ?? { from: { pathname: "/ "} };
+      const { from }: { from: {pathname: string}} = location.state ?? { from: { pathname: "/ "} };
       return <Navigate to={from} />;
   }
 
@@ -30,6 +30,6 @@ const Protected = ({ onlyUnAuth = false, component}: ProtectedProps): React.JSX.
 }
 
 export const OnlyAuth = Protected;
-export const OnlyUnAuth = ({component}: {component: React.JSX.Element}): React.JSX.Element => (
+export const OnlyUnAuth = ({component}: {component: React.JSX.Element}) => (
   <Protected onlyUnAuth={true} component={component} />
 );

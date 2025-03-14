@@ -1,4 +1,5 @@
 import { LoginData, UserData } from '../model';
+import { TAuthResponse, TIngredientsResponse, TNoticeResponse, TOrderResponse, TTokenResponse, TUserResponse } from './api-types';
 
 const BASE_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_PATH = 'ingredients';
@@ -16,7 +17,7 @@ export type PasswordResetData = {
   token: string;
 }
 
-const checkResponse = (res: Response) => {
+const checkResponse = <T>(res: Response): Promise<T> => {
   if (res.ok) {
     return res.json();
   }
@@ -28,16 +29,16 @@ const checkResponse = (res: Response) => {
   ) : Promise.reject(`Ошибка ${status}`);
 };
 
-const request = (endPoint: string, options?: RequestInit) => {
-  return fetch(`${BASE_URL}${endPoint}`, options).then(checkResponse);
+const request = <T>(endPoint: string, options?: RequestInit): Promise<T> => {
+  return fetch(`${BASE_URL}${endPoint}`, options).then(checkResponse<T>);
 }
 
 const getIngredients = () => {
-  return request(INGREDIENTS_PATH);
+  return request<TIngredientsResponse>(INGREDIENTS_PATH);
 };
 
 const createOrder = (ingredients: string[], token: string) => {
-  return request(ORDERS_PATH, {
+  return request<TOrderResponse>(ORDERS_PATH, {
       method: 'POST',
       body: JSON.stringify({
         'ingredients': ingredients
@@ -50,7 +51,7 @@ const createOrder = (ingredients: string[], token: string) => {
 };
 
 const passwordResetRequest = (email: string) => {
-  return request(PASSWORD_RESET_REQUEST_PATH, {
+  return request<TNoticeResponse>(PASSWORD_RESET_REQUEST_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'email': email
@@ -62,7 +63,7 @@ const passwordResetRequest = (email: string) => {
 }
 
 const passwordResetSave = ({password, token}: PasswordResetData) => {
-  return request(PASSWORD_RESET_SAVE_PATH, {
+  return request<TNoticeResponse>(PASSWORD_RESET_SAVE_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'password': password,
@@ -75,7 +76,7 @@ const passwordResetSave = ({password, token}: PasswordResetData) => {
 }
 
 const register = (data: UserData) => {
-  return request(REGISTER_PATH, {
+  return request<TAuthResponse>(REGISTER_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'email': data.email,
@@ -89,7 +90,7 @@ const register = (data: UserData) => {
 }
 
 const login = ({email, password}: LoginData) => {
-  return request(LOGIN_PATH, {
+  return request<TAuthResponse>(LOGIN_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'email': email,
@@ -102,7 +103,7 @@ const login = ({email, password}: LoginData) => {
 }
 
 const updateToken = (refreshToken: string) => {
-  return request(TOKEN_PATH, {
+  return request<TTokenResponse>(TOKEN_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'token': refreshToken
@@ -114,7 +115,7 @@ const updateToken = (refreshToken: string) => {
 }
 
 const logout = (refreshToken: string) => {
-  return request(LOGOUT_PATH, {
+  return request<TNoticeResponse>(LOGOUT_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'token': refreshToken
@@ -126,7 +127,7 @@ const logout = (refreshToken: string) => {
 }
 
 const getUser = (token: string) => {
-  return request(USER_PATH, {
+  return request<TUserResponse>(USER_PATH, {
     method: 'GET',
     headers: {
       'Authorization': `${token}`,
@@ -136,7 +137,7 @@ const getUser = (token: string) => {
 }
 
 const updateUser = (data: UserData, token: string) => {
-  return request(USER_PATH, {
+  return request<TUserResponse>(USER_PATH, {
     method: 'PATCH',
     body: JSON.stringify({
       'email': data.email,

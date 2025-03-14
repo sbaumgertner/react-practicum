@@ -4,11 +4,7 @@ import styles from './user-access.module.css';
 import { useState } from 'react';
 import Loader from 'react-ts-loaders';
 import { api } from '../../utils/burger-api';
-
-type ResetPasswordResponse = {
-  success: boolean;
-  message: string;
-}
+import { TNoticeResponse } from '../../utils/api-types';
 
 export function ResetPasswordPage() {
   const location = useLocation();
@@ -35,7 +31,7 @@ export function ResetPasswordPage() {
     setError(null);
     setSuccess(false);
     setLoading(true);
-    api.passwordResetSave({password, token}).then((res: ResetPasswordResponse) => {
+    api.passwordResetSave({password, token}).then((res: TNoticeResponse) => {
       setLoading(false);
       if (res.success) {
         setError(null);
