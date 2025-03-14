@@ -28,12 +28,16 @@ const checkResponse = (res: Response) => {
   ) : Promise.reject(`Ошибка ${status}`);
 };
 
+const request = (endPoint: string, options?: RequestInit) => {
+  return fetch(`${BASE_URL}${endPoint}`, options).then(checkResponse);
+}
+
 const getIngredients = () => {
-  return fetch(`${BASE_URL}${INGREDIENTS_PATH}`).then(checkResponse);
+  return request(INGREDIENTS_PATH);
 };
 
 const createOrder = (ingredients: string[], token: string) => {
-  return fetch(`${BASE_URL}${ORDERS_PATH}`, {
+  return request(ORDERS_PATH, {
       method: 'POST',
       body: JSON.stringify({
         'ingredients': ingredients
@@ -42,11 +46,11 @@ const createOrder = (ingredients: string[], token: string) => {
         'Content-Type': 'application/json',
         'Authorization': `${token}`,
       }
-  }).then(checkResponse);
+  });
 };
 
 const passwordResetRequest = (email: string) => {
-  return fetch(`${BASE_URL}${PASSWORD_RESET_REQUEST_PATH}`, {
+  return request(PASSWORD_RESET_REQUEST_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'email': email
@@ -54,11 +58,11 @@ const passwordResetRequest = (email: string) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }).then(checkResponse);
+  });
 }
 
 const passwordResetSave = ({password, token}: PasswordResetData) => {
-  return fetch(`${BASE_URL}${PASSWORD_RESET_SAVE_PATH}`, {
+  return request(PASSWORD_RESET_SAVE_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'password': password,
@@ -67,11 +71,11 @@ const passwordResetSave = ({password, token}: PasswordResetData) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }).then(checkResponse);
+  });
 }
 
 const register = (data: UserData) => {
-  return fetch(`${BASE_URL}${REGISTER_PATH}`, {
+  return request(REGISTER_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'email': data.email,
@@ -81,11 +85,11 @@ const register = (data: UserData) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }).then(checkResponse); 
+  }); 
 }
 
 const login = ({email, password}: LoginData) => {
-  return fetch(`${BASE_URL}${LOGIN_PATH}`, {
+  return request(LOGIN_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'email': email,
@@ -94,11 +98,11 @@ const login = ({email, password}: LoginData) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }).then(checkResponse); 
+  }); 
 }
 
 const updateToken = (refreshToken: string) => {
-  return fetch(`${BASE_URL}${TOKEN_PATH}`, {
+  return request(TOKEN_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'token': refreshToken
@@ -106,11 +110,11 @@ const updateToken = (refreshToken: string) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }).then(checkResponse); 
+  }); 
 }
 
 const logout = (refreshToken: string) => {
-  return fetch(`${BASE_URL}${LOGOUT_PATH}`, {
+  return request(LOGOUT_PATH, {
     method: 'POST',
     body: JSON.stringify({
       'token': refreshToken
@@ -118,21 +122,21 @@ const logout = (refreshToken: string) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }).then(checkResponse);
+  });
 }
 
 const getUser = (token: string) => {
-  return fetch(`${BASE_URL}${USER_PATH}`, {
+  return request(USER_PATH, {
     method: 'GET',
     headers: {
       'Authorization': `${token}`,
       'Content-Type': 'application/json',
     }
-  }).then(checkResponse);
+  });
 }
 
 const updateUser = (data: UserData, token: string) => {
-  return fetch(`${BASE_URL}${USER_PATH}`, {
+  return request(USER_PATH, {
     method: 'PATCH',
     body: JSON.stringify({
       'email': data.email,
@@ -143,7 +147,7 @@ const updateUser = (data: UserData, token: string) => {
       'Authorization': `${token}`,
       'Content-Type': 'application/json',
     }
-  }).then(checkResponse); 
+  }); 
 }
 
 export const api = {

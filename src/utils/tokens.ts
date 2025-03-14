@@ -26,7 +26,12 @@ export function removeTokens(): void {
 export async function updateTokens() {
   const refreshToken = getAccessToken();
   if (refreshToken) {
-    const response: TokensResponse = await api.updateToken(refreshToken) as TokensResponse;
-    setTokens(response);
+    try {
+      const response: TokensResponse = await api.updateToken(refreshToken) as TokensResponse;
+      setTokens(response);
+    }
+    catch {
+      removeTokens();
+    }
   }
 }
