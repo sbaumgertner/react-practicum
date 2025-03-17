@@ -4,11 +4,7 @@ import styles from './user-access.module.css';
 import { useState } from 'react';
 import { api } from '../../utils/burger-api';
 import Loader from 'react-ts-loaders';
-
-type ResetPasswordResponse = {
-  success: boolean;
-  message: string;
-}
+import { TNoticeResponse } from '../../utils/api-types';
 
 export function ForgotPasswordPage() {
   const [email, setEmail] = useState('');
@@ -24,7 +20,7 @@ export function ForgotPasswordPage() {
     e.preventDefault();
     setError(false);
     setLoading(true);
-    api.passwordResetRequest(email).then((res: ResetPasswordResponse) => {
+    api.passwordResetRequest(email).then((res: TNoticeResponse) => {
       setLoading(false);
       if (res.success) {
         navigate('/reset-password', {state: {fromForgotPassword: true}});
