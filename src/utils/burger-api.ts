@@ -1,5 +1,5 @@
 import { LoginData, UserData } from '../model';
-import { TAuthResponse, TIngredientsResponse, TNoticeResponse, TOrderResponse, TTokenResponse, TUserResponse } from './api-types';
+import { TAuthResponse, TIngredientsResponse, TNoticeResponse, TOrderResponse, TOrdersResponse, TTokenResponse, TUserResponse } from './api-types';
 
 const BASE_URL = 'https://norma.nomoreparties.space/api/';
 const INGREDIENTS_PATH = 'ingredients';
@@ -12,6 +12,9 @@ const LOGOUT_PATH = 'auth/logout';
 const TOKEN_PATH = 'auth/token';
 const USER_PATH = 'auth/user';
 
+export const ORDERS_URL = 'wss://norma.nomoreparties.space/orders/all';
+export const PROFILE_ORDERS_URL = 'wss://norma.nomoreparties.space/orders';
+
 export type PasswordResetData = {
   password: string;
   token: string;
@@ -23,10 +26,10 @@ const checkResponse = <T>(res: Response): Promise<T> => {
   }
   const status = res.status;
   const isJson = res.headers.get('Content-Type')?.includes('application/json');
-  return  isJson ? res.json()
-  .then((errorData) => 
-    Promise.reject(`Ошибка ${status}. ${errorData.message || 'Неизвестная ошибка'}`)
-  ) : Promise.reject(`Ошибка ${status}`);
+  return isJson ? res.json()
+    .then((errorData) =>
+      Promise.reject(`Ошибка ${status}. ${errorData.message || 'Неизвестная ошибка'}`)
+    ) : Promise.reject(`Ошибка ${status}`);
 };
 
 const request = <T>(endPoint: string, options?: RequestInit): Promise<T> => {
@@ -39,15 +42,19 @@ const getIngredients = () => {
 
 const createOrder = (ingredients: string[], token: string) => {
   return request<TOrderResponse>(ORDERS_PATH, {
-      method: 'POST',
-      body: JSON.stringify({
-        'ingredients': ingredients
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `${token}`,
-      }
+    method: 'POST',
+    body: JSON.stringify({
+      'ingredients': ingredients
+    }),
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${token}`,
+    }
   });
+};
+
+const getOrder = (number: number) => {
+  return request<TOrdersResponse>(`${ORDERS_PATH}/${number}`);
 };
 
 const passwordResetRequest = (email: string) => {
@@ -62,7 +69,7 @@ const passwordResetRequest = (email: string) => {
   });
 }
 
-const passwordResetSave = ({password, token}: PasswordResetData) => {
+const passwordResetSave = ({ password, token }: PasswordResetData) => {
   return request<TNoticeResponse>(PASSWORD_RESET_SAVE_PATH, {
     method: 'POST',
     body: JSON.stringify({
@@ -86,10 +93,10 @@ const register = (data: UserData) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }); 
+  });
 }
 
-const login = ({email, password}: LoginData) => {
+const login = ({ email, password }: LoginData) => {
   return request<TAuthResponse>(LOGIN_PATH, {
     method: 'POST',
     body: JSON.stringify({
@@ -99,7 +106,7 @@ const login = ({email, password}: LoginData) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }); 
+  });
 }
 
 const updateToken = (refreshToken: string) => {
@@ -111,7 +118,7 @@ const updateToken = (refreshToken: string) => {
     headers: {
       'Content-Type': 'application/json',
     }
-  }); 
+  });
 }
 
 const logout = (refreshToken: string) => {
@@ -148,12 +155,13 @@ const updateUser = (data: UserData, token: string) => {
       'Authorization': `${token}`,
       'Content-Type': 'application/json',
     }
-  }); 
+  });
 }
 
 export const api = {
   getIngredients,
   getUser,
+  getOrder,
   createOrder,
   passwordResetRequest,
   passwordResetSave,

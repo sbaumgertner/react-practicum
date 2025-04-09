@@ -1,10 +1,9 @@
 import { Button, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
 import styles from './user-access.module.css';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store';
 import { getUserError, getUserLoading, resetError } from '../../services/user/reducer';
 import { useEffect, useState } from 'react';
-import { AppDispatch } from '../../main';
 import { login } from '../../services/user/actions';
 import Loader from 'react-ts-loaders';
 
@@ -16,7 +15,7 @@ export function LoginPage() {
     password: ''
   });
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(resetError());
@@ -24,8 +23,8 @@ export function LoginPage() {
 
   const changeFormData = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const {name, value} = e.target;
-    setFormData({...formData, [name]: value});
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   }
 
   const submit = (e: React.FormEvent<HTMLFormElement>) => {

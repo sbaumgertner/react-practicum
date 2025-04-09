@@ -42,9 +42,9 @@ function BurgerIngredients() {
         <h1>Соберите бургер</h1>
         <nav ref={tabsRef} className={styles.Nav}>
           {Array.from(tabs.entries()).map(([type, name]) => (
-              <Tab key={type} value={type} active={type === currentTab} onClick={() => onTabClick(type)}>
-                {name}
-              </Tab>
+            <Tab key={type} value={type} active={type === currentTab} onClick={() => onTabClick(type)}>
+              {name}
+            </Tab>
           ))}
         </nav>
       </header>
@@ -53,7 +53,7 @@ function BurgerIngredients() {
           <li ref={groupsRefs.get(type)} key={type}>
             <IngredientsGroup type={type} />
           </li>
-        ))}  
+        ))}
       </ul>
     </section>
   )

@@ -4,20 +4,19 @@ import { useState } from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from './order-details/order-details';
 import { useDrop } from 'react-dnd';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store';
 import { addIngredient, getPrice, getRecipe } from '../../services/constructor/reducer';
 import { getAllIngredients } from '../../services/ingredients/reducer';
 import { createOrder } from '../../services/order/actions';
-import { AppDispatch } from '../../main';
 import ConstructorIngredient from './constructor-ingredient/constructor-ingredient';
 import { getUser } from '../../services/user/reducer';
 import { useNavigate } from 'react-router-dom';
 
 function BurgerConstructor() {
   const [showOrderDetails, setShowOrderDetails] = useState(false);
-  
+
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
   const recipe = useSelector(getRecipe);
   const ingredients = useSelector(getAllIngredients);
   const price = useSelector(getPrice);
@@ -25,14 +24,14 @@ function BurgerConstructor() {
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(item: {id: string}) {
+    drop(item: { id: string }) {
       onDropHandler(item.id);
     },
   });
 
   function onDropHandler(id: string) {
     const ingredient = ingredients.find(ingredient => ingredient._id === id);
-    if (ingredient){
+    if (ingredient) {
       dispatch(addIngredient(ingredient));
     }
   }
@@ -70,9 +69,9 @@ function BurgerConstructor() {
           recipe.stuff.length > 0 ? recipe.stuff.map(ingredient => (
             <ConstructorIngredient key={ingredient.uid} ingredient={ingredient} />
           )) :
-          (<div className="constructor-element ml-8 mb-4">
-            <p className={styles.Placeholder}>Выберите начинку</p>
-          </div>)
+            (<div className="constructor-element ml-8 mb-4">
+              <p className={styles.Placeholder}>Выберите начинку</p>
+            </div>)
         }
       </ul>
       {recipe.wrap ? (<ConstructorElement
@@ -83,10 +82,10 @@ function BurgerConstructor() {
         thumbnail={recipe.wrap.image}
         extraClass="ml-8 mt-4"
       />) : (
-          <div className="constructor-element constructor-element_pos_bottom ml-8 mb-4">
-            <p className={styles.Placeholder}>Выберите булку</p>
-          </div>
-        )
+        <div className="constructor-element constructor-element_pos_bottom ml-8 mb-4">
+          <p className={styles.Placeholder}>Выберите булку</p>
+        </div>
+      )
       }
       <div className={styles.Order}>
         <span className={styles.Price}>

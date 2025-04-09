@@ -1,11 +1,10 @@
 import styles from './profile.module.css';
-import { Button, EmailInput, Input, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUser, getUserError, getUserLoading } from "../../services/user/reducer";
-import { AppDispatch } from "../../main";
-import Loader from "react-ts-loaders";
-import { updateUser } from "../../services/user/actions";
+import { Button, EmailInput, Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from '../../services/store';
+import { getUser, getUserError, getUserLoading } from '../../services/user/reducer';
+import Loader from 'react-ts-loaders';
+import { updateUser } from '../../services/user/actions';
 
 export function AccountPage() {
   const loading = useSelector(getUserLoading);
@@ -26,12 +25,12 @@ export function AccountPage() {
     })
   }, [user]);
 
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch();
 
   const changeFormData = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const {name, value} = e.target;
-    setFormData({...formData, [name]: value});
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
     setIsChanged(true);
   }
 

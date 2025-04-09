@@ -11,10 +11,10 @@ type IngredientItemProps = {
   count?: number;
 }
 
-function IngredientItem({id, image, name, price, count = 0}: IngredientItemProps) {
+function IngredientItem({ id, image, name, price, count = 0 }: IngredientItemProps) {
   const [, dragRef] = useDrag({
     type: 'ingredient',
-    item: {id}
+    item: { id }
   });
 
   return (
@@ -22,7 +22,7 @@ function IngredientItem({id, image, name, price, count = 0}: IngredientItemProps
       <img src={image} alt={name} />
       <div className={styles.Price}>
         <span>{price}</span>
-        <CurrencyIcon type="primary"/>
+        <CurrencyIcon type="primary" />
       </div>
       <p>{name}</p>
       {count > 0 && (<Counter count={count} />)}

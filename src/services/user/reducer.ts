@@ -17,7 +17,7 @@ const initialState: UserState = {
 };
 
 export const userSlice = createSlice({
-  name: "user",
+  name: 'user',
   reducers: {
     setIsAuthChecked: (state, action: PayloadAction<boolean>) => {
       state.isAuthChecked = action.payload;
@@ -39,19 +39,19 @@ export const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(register.pending, (state) => {
-          state.loading = true;
-          state.user = null;
-          state.error = null;
+        state.loading = true;
+        state.user = null;
+        state.error = null;
       })
       .addCase(register.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.error?.message || "Unknown error";
-          state.user = null;
+        state.loading = false;
+        state.error = action.error?.message || 'Unknown error';
+        state.user = null;
       })
       .addCase(register.fulfilled, (state, action) => {
-          state.loading = false;
-          state.error = null;
-          state.user = action.payload.user;
+        state.loading = false;
+        state.error = null;
+        state.user = action.payload.user;
       })
       .addCase(login.pending, (state) => {
         state.loading = true;
@@ -59,14 +59,14 @@ export const userSlice = createSlice({
         state.error = null;
       })
       .addCase(login.rejected, (state, action) => {
-          state.loading = false;
-          state.error = action.error?.message || "Unknown error";
-          state.user = null;
+        state.loading = false;
+        state.error = action.error?.message || 'Unknown error';
+        state.user = null;
       })
       .addCase(login.fulfilled, (state, action) => {
-          state.loading = false;
-          state.user = action.payload.user;
-          state.error = null;
+        state.loading = false;
+        state.user = action.payload.user;
+        state.error = null;
       })
       .addCase(updateUser.pending, (state) => {
         state.loading = true;
@@ -74,7 +74,7 @@ export const userSlice = createSlice({
       })
       .addCase(updateUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error?.message || "Unknown error";
+        state.error = action.error?.message || 'Unknown error';
       })
       .addCase(updateUser.fulfilled, (state) => {
         state.loading = false;
@@ -86,7 +86,7 @@ export const userSlice = createSlice({
       })
       .addCase(logout.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error?.message || "Unknown error";
+        state.error = action.error?.message || 'Unknown error';
       })
       .addCase(logout.fulfilled, (state) => {
         state.loading = false;
@@ -103,3 +103,7 @@ export const {
 } = userSlice.selectors;
 
 export const { setIsAuthChecked, setUser, resetError } = userSlice.actions;
+
+export type UserReducerActionTypes = ReturnType<typeof setIsAuthChecked>
+  | ReturnType<typeof setUser>
+  | ReturnType<typeof resetError>;

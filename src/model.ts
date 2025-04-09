@@ -46,7 +46,26 @@ export type LoginData = {
   password: string;
 }
 
+export type OrderStatusType = 'done' | 'created' | 'pending';
+
+export const orderStatus = new Map<OrderStatusType, string>([
+  ['done', 'Выполнен'],
+  ['created', 'Создан'],
+  ['pending', 'Готовится']
+]);
+
 export type OrderModel = {
+  ingredients: string[];
+  _id: string;
+  status: OrderStatusType;
   name: string;
-  order: {number: number};
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type OrdersListModel = {
+  orders: OrderModel[];
+  total?: number;
+  totalToday?: number;
 }

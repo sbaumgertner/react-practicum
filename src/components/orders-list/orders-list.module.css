@@ -1,0 +1,45 @@
+.Orders {
+  composes: custom-scroll pr-2 from global;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  gap: var(--orders-list-gap, 16px);
+}
+
+.Link {
+  text-decoration: none;
+}
+
+.Success {
+  color: var(--colors-interface-success);
+}
+
+.Price {
+  display: flex;
+  align-items: center;
+  gap: calc(var(--offset-base-size) * 2);
+}
+
+.Date {
+  color: var(--text-inactive-color);
+}
+
+.IngredientImg {
+  width: 80px;
+  height: 40px;
+}
+
+.ImgWrap {
+  width: 64px;
+  height: 64px;
+  border-width: 2px;
+  border-radius: 100px;
+  background:
+    linear-gradient(var(--background-alt), var(--background-alt)) padding-box,
+    linear-gradient(63.18deg, #801AB3, #4C4CFF) border-box;
+  border: 2px solid transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+}

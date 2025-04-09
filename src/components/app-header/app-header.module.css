@@ -1,6 +1,9 @@
 .Header {
   composes: pb-4 pt-4 from global;
-  
+  background-color: var(--background);
+}
+
+.HeaderWrapper {
   display: flex;
   justify-content: center;
   align-items: center;

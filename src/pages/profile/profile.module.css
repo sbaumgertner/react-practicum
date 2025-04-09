@@ -1,8 +1,7 @@
 .Content {
   display: flex;
   gap: 60px;
-  width: fit-content;
-  padding-top: calc(var(--offset-base-size) * 30);;
+  padding-top: calc(var(--offset-base-size) * 30);
 }
 
 .NavWrap {
@@ -32,17 +31,18 @@
 }
 
 .Inputs {
+  width: 480px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-}
-
-.Outlet {
-  width: 480px;
 }
 
 .Buttons {
   align-self: center;
   display: flex;
   gap: 24px;
+}
+
+.Outlet {
+  flex-grow: 1;
 }

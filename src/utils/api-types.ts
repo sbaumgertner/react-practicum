@@ -1,4 +1,4 @@
-import { IngredientModel, UserModel } from "../model";
+import { IngredientModel, OrderModel, OrdersListModel, UserModel } from '../model';
 
 export type TResponse = {
   success: boolean;
@@ -28,21 +28,7 @@ export type TIngredientsResponse = TResponse & {
 }
 
 export type TOrderResponse = TResponse & {
-  name: string;
-  order: {
-    ingredients: IngredientModel[];
-    _id: string;
-    owner: {
-        name: string;
-        email: string;
-        createdAt: string;
-        updatedAt: string;
-    }
-    status: string;
-    name: string;
-    createdAt: string;
-    updatedAt: string;
-    number: number;
-    price: number;
-  }
+  order: OrderModel;
 }
+
+export type TOrdersResponse = TResponse & OrdersListModel;

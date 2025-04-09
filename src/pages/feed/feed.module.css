@@ -1,0 +1,44 @@
+.Feed {
+  display: flex;
+  gap: 60px;
+  justify-content: space-around;
+}
+
+.Orders {
+  composes: pt-5 from global;
+  flex-basis: 608px;
+  max-height: calc(100vh - 228px);
+  display: flex;
+}
+
+.Stat {
+  composes: pt-25 from global;
+  flex-basis: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.Statuses {
+  display: flex;
+  gap: 36px;
+}
+
+.Numbers {
+  composes: text_type_digits-default mt-4 from global;
+  width: 272px;
+  max-height: 153px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  flex-wrap: wrap;
+  column-gap: 20px;
+}
+
+.Success {
+  color: var(--colors-interface-success);
+}
+
+.Content {
+  padding-top: calc(var(--offset-base-size) * 30);
+}

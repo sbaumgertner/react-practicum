@@ -1,5 +1,5 @@
-import { TTokenResponse } from "./api-types";
-import { api } from "./burger-api";
+import { TTokenResponse } from './api-types';
+import { api } from './burger-api';
 
 export function getAccessToken(): string | null {
   return localStorage.getItem('accessToken');
@@ -20,7 +20,7 @@ export function removeTokens(): void {
 }
 
 export async function updateTokens(): Promise<void> {
-  const refreshToken = getAccessToken();
+  const refreshToken = getRefreshToken();
   if (refreshToken) {
     try {
       const response: TTokenResponse = await api.updateToken(refreshToken);
@@ -30,4 +30,11 @@ export async function updateTokens(): Promise<void> {
       removeTokens();
     }
   }
+}
+
+export function addTokenToUrl(url: string): string {
+  if (getAccessToken()) {
+    return `${url}?token=${String(getAccessToken()).replace('Bearer ', '')}`;
+  }
+  return url;
 }
