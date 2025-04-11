@@ -1,0 +1,6 @@
+.ProfileOrders {
+  --orders-list-gap: 24px;
+  display: flex;
+  width: 844px;
+  max-height: calc(100vh - 248px);
+}

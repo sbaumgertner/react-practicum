@@ -4,7 +4,7 @@ type ModalOverlayProps = {
   onClick: () => void;
 }
 
-function ModalOverlay({onClick}:ModalOverlayProps) {
+function ModalOverlay({ onClick }: ModalOverlayProps) {
   return (
     <div className={styles.Overlay} onClick={onClick}></div>
   );

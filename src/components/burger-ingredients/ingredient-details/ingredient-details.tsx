@@ -1,10 +1,9 @@
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../services/store';
 import styles from './ingredient-details.module.css';
-import { getIngredientById, IngredientsState } from '../../../services/ingredients/reducer';
-import { IngredientModel } from '../../../model';
+import { getIngredientById } from '../../../services/ingredients/reducer';
 
-function IngredientDetails({id}: {id: string}) {
-  const ingredient = useSelector<{ingredients: IngredientsState}, IngredientModel | undefined>(
+function IngredientDetails({ id }: { id: string }) {
+  const ingredient = useSelector(
     state => getIngredientById(state, id)
   );
 

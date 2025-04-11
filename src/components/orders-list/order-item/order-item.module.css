@@ -1,0 +1,45 @@
+.Card {
+  composes: p-4 from global;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  border-radius: var(--common-border-radius-s);
+  background-color: var(--background);
+  box-shadow: 0px 0px 1px 0px #0000000A;
+  box-shadow: 0px 0px 2px 0px #0000000F;
+  box-shadow: 0px 4px 8px 0px #0000000A;
+  cursor: pointer;
+  color: var(--text-primary-color);
+}
+
+.CardRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.Price {
+  composes: text_type_digits-medium from global;
+}
+
+.ImgWrap {
+  overflow: hidden;
+  position: relative;
+  margin-right: -20px;
+}
+
+.Images {
+  display: flex;
+  position: relative;
+}
+
+.ImgOthers {
+  filter: brightness(30%);
+}
+
+.Others {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

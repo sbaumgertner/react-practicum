@@ -10,9 +10,9 @@ type NavigationLinkProps = {
   className?: string;
 };
 
-function NavigationLink({Icon, text, isActive = false, className}: NavigationLinkProps) {
+function NavigationLink({ Icon, text, isActive = false, className }: NavigationLinkProps) {
   return (
-    <div className={ clsx(styles.Link, {[styles.Active]: isActive}, className) }>
+    <div className={clsx(styles.Link, { [styles.Active]: isActive }, className)}>
       <Icon type={isActive ? 'primary' : 'secondary'} />
       <span>{text}</span>
     </div>

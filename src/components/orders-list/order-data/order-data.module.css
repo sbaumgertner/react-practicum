@@ -1,0 +1,37 @@
+.Order {
+  display: flex;
+  flex-direction: column;
+  width: 640px;
+  max-height: calc(100vh - var(--max-height-order-data, 250px));
+}
+
+.Ingredients {
+  composes: custom-scroll pr-8 from global;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  gap: 16px;
+}
+
+.Ingredient {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.IngredientTitle {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+.Price {
+  composes: text_type_digits-default from global;
+}
+
+.Summary {
+  composes: mt-10 from global;
+  display: flex;
+  justify-content: space-between;
+}

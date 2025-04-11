@@ -1,6 +1,6 @@
-import { useNavigate, useParams } from "react-router-dom";
-import IngredientDetails from "../../components/burger-ingredients/ingredient-details/ingredient-details";
-import Modal from "../../components/modal/modal";
+import { useNavigate, useParams } from 'react-router-dom';
+import IngredientDetails from '../../components/burger-ingredients/ingredient-details/ingredient-details';
+import Modal from '../../components/modal/modal';
 
 export function IngredientModal() {
   const navigate = useNavigate();
@@ -9,10 +9,10 @@ export function IngredientModal() {
   const onClose = () => {
     navigate('/');
   }
-  
+
   return params.id && (
-    <Modal header='Детали ингредиента' onClose={onClose}>
-      <IngredientDetails id={params.id}/>
+    <Modal header="Детали ингредиента" onClose={onClose}>
+      <IngredientDetails id={params.id} />
     </Modal>
   );
 }

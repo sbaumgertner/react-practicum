@@ -31,7 +31,7 @@ export function ResetPasswordPage() {
     setError(null);
     setSuccess(false);
     setLoading(true);
-    api.passwordResetSave({password, token}).then((res: TNoticeResponse) => {
+    api.passwordResetSave({ password, token }).then((res: TNoticeResponse) => {
       setLoading(false);
       if (res.success) {
         setError(null);
@@ -51,7 +51,7 @@ export function ResetPasswordPage() {
   }
 
   if (success) {
-    return (<p className={styles.Success}>Пароль успешно обновлен. <Link to='/login'>Войти</Link></p>);
+    return (<p className={styles.Success}>Пароль успешно обновлен. <Link to="/login">Войти</Link></p>);
   }
 
   return (

@@ -5,7 +5,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1010;
-  padding: calc(var(--offset-base-size)  * 10) calc(var(--offset-base-size)  * 10) calc(var(--offset-base-size)  * 15);
+  padding: calc(var(--offset-base-size) * 10) calc(var(--offset-base-size) * 10) calc(var(--offset-base-size) * 15);
   background-color: var(--background);
   border: 1px solid #4C4CFF33;
   border-radius: var(--common-border-radius-s);

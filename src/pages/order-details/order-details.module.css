@@ -1,0 +1,13 @@
+.OrderDetails {
+  --max-height-order-data: 313px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  width: fit-content;
+  margin: auto;
+}
+
+.Number {
+  composes: text_type_digits-default from global;
+  align-self: center;
+}

@@ -1,6 +1,6 @@
 import styles from './order-details.module.css';
 import doneImg from '../../../images/done.png';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../services/store';
 import { getOrderError, getOrderLoading, getOrderNumber } from '../../../services/order/reducer';
 import Loader from 'react-ts-loaders';
 

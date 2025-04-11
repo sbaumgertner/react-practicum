@@ -28,8 +28,8 @@
   gap: calc(var(--offset-base-size) * 2);
 
   svg {
-      width: 36px;
-      height: 36px;
+    width: 36px;
+    height: 36px;
   }
 }
 

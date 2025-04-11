@@ -23,7 +23,7 @@ export function ForgotPasswordPage() {
     api.passwordResetRequest(email).then((res: TNoticeResponse) => {
       setLoading(false);
       if (res.success) {
-        navigate('/reset-password', {state: {fromForgotPassword: true}});
+        navigate('/reset-password', { state: { fromForgotPassword: true } });
       }
       else {
         setError(true);

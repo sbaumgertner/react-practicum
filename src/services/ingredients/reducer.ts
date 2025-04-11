@@ -1,6 +1,6 @@
-import {createSlice, createSelector} from "@reduxjs/toolkit";
-import { loadIngredients } from "./action";
-import { IngredientModel } from "../../model";
+import { createSlice, createSelector } from '@reduxjs/toolkit';
+import { loadIngredients } from './actions';
+import { IngredientModel } from '../../model';
 
 export type IngredientsState = {
   ingredients: IngredientModel[];
@@ -15,42 +15,57 @@ const initialState: IngredientsState = {
 };
 
 export const ingredientsSlice = createSlice({
-  name: "ingredients",
+  name: 'ingredients',
   reducers: {},
   initialState,
   selectors: {
     getIngredientsLoading: state => state.loading,
     getIngredientsError: state => state.error,
-    getAllIngredients:  state => state.ingredients,
+    getAllIngredients: state => state.ingredients,
     getIngredientsByType: createSelector(
-      [(state):IngredientModel[] => ingredientsSlice.getSelectors().getAllIngredients(state), 
-        (_, type) => type
+      [(state): IngredientModel[] => ingredientsSlice.getSelectors().getAllIngredients(state),
+      (_, type) => type
       ]
       ,
       (ingredients, type) => ingredients.filter((ingredient: IngredientModel) => ingredient.type === type)
     ),
+    getMappedIngredients: createSelector(
+      [(state): IngredientModel[] => ingredientsSlice.getSelectors().getAllIngredients(state)],
+      (ingredients) => {
+        const ingredientsMap = new Map<string, IngredientModel>();
+        ingredients.forEach(ingredient => ingredientsMap.set(ingredient._id, ingredient));
+        return ingredientsMap;
+      }
+    ),
     getIngredientById: createSelector(
-      [(state):IngredientModel[] => ingredientsSlice.getSelectors().getAllIngredients(state), 
-        (_, id) => id
+      [(state): Map<string, IngredientModel> => ingredientsSlice.getSelectors().getMappedIngredients(state),
+      (_, id) => id
       ]
       ,
-      (ingredients, id) => ingredients.find((ingredient: IngredientModel) => ingredient._id === id)
-    )
+      (ingredientsMap, id) => ingredientsMap.get(id)
+    ),
+    getIngredientsByIds: createSelector(
+      [(state): Map<string, IngredientModel> => ingredientsSlice.getSelectors().getMappedIngredients(state),
+      (_, ids: string[]) => ids
+      ]
+      ,
+      (ingredientsMap, ids) => ids.map(id => ingredientsMap.get(id)).filter(ingredient => ingredient !== undefined)
+    ),
   },
   extraReducers: (builder) => {
-      builder
-          .addCase(loadIngredients.pending, (state) => {
-              state.loading = true;
-          })
-          .addCase(loadIngredients.rejected, (state, action) => {
-              state.loading = false;
-              state.error = action.error?.message || "Unknown error";
-              state.ingredients = [];
-          })
-          .addCase(loadIngredients.fulfilled, (state, action) => {
-              state.loading = false;
-              state.ingredients = action.payload.data;
-          })
+    builder
+      .addCase(loadIngredients.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(loadIngredients.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error?.message || 'Unknown error';
+        state.ingredients = [];
+      })
+      .addCase(loadIngredients.fulfilled, (state, action) => {
+        state.loading = false;
+        state.ingredients = action.payload.data;
+      })
   }
 });
 
@@ -59,5 +74,7 @@ export const {
   getIngredientsError,
   getIngredientsLoading,
   getIngredientsByType,
-  getIngredientById
+  getMappedIngredients,
+  getIngredientById,
+  getIngredientsByIds
 } = ingredientsSlice.selectors;

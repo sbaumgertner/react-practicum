@@ -1,19 +1,19 @@
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorIngredientModel } from '../../../model';
 import styles from './constructor-ingredient.module.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../../services/store';
 import { deleteIngredient, moveIngredient } from '../../../services/constructor/reducer';
 import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
 
-function ConstructorIngredient({ingredient}: {ingredient: ConstructorIngredientModel}) {
+function ConstructorIngredient({ ingredient }: { ingredient: ConstructorIngredientModel }) {
   const dispatch = useDispatch();
   const ref = useRef<HTMLLIElement>(null);
 
-  const [{isOver}, drop] = useDrop({
+  const [{ isOver }, drop] = useDrop({
     accept: 'constructorIngredient',
-    drop(item: {uid: string}){
-      dispatch(moveIngredient({uidFrom: item.uid, uidTo: ingredient.uid}));
+    drop(item: { uid: string }) {
+      dispatch(moveIngredient({ uidFrom: item.uid, uidTo: ingredient.uid }));
     },
     collect: (monitor) => ({
       isOver: monitor.getItem()?.uid !== ingredient.uid && monitor.isOver()
@@ -23,7 +23,7 @@ function ConstructorIngredient({ingredient}: {ingredient: ConstructorIngredientM
 
   const [{ isDragging }, dragRef] = useDrag({
     type: 'constructorIngredient',
-    item: {uid: ingredient.uid},
+    item: { uid: ingredient.uid },
     collect: (monitor) => ({
       isDragging: monitor.isDragging()
     })
@@ -37,7 +37,7 @@ function ConstructorIngredient({ingredient}: {ingredient: ConstructorIngredientM
   }
 
   return (
-    <li ref={ref} className={styles.StuffItem} style={{opacity, padding}}>
+    <li ref={ref} className={styles.StuffItem} style={{ opacity, padding }}>
       <DragIcon type="primary" />
       <ConstructorElement
         text={ingredient.name}
