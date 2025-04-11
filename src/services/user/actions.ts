@@ -77,18 +77,18 @@ export const updateUser = createAsyncThunk<void, UserData>(
   }
 );
 
-export type UserActionTypes = ReturnType<typeof register.pending>
-  | ReturnType<typeof register.fulfilled>
-  | ReturnType<typeof register.rejected>
-  | ReturnType<typeof login.pending>
-  | ReturnType<typeof login.fulfilled>
-  | ReturnType<typeof login.rejected>
-  | ReturnType<typeof logout.pending>
-  | ReturnType<typeof logout.fulfilled>
-  | ReturnType<typeof logout.rejected>
-  | ReturnType<typeof checkUserAuth.pending>
-  | ReturnType<typeof checkUserAuth.fulfilled>
-  | ReturnType<typeof checkUserAuth.rejected>
-  | ReturnType<typeof updateUser.pending>
-  | ReturnType<typeof updateUser.fulfilled>
-  | ReturnType<typeof updateUser.rejected>;
+export type UserActionTypes = ReturnType<typeof register.pending
+  | typeof register.fulfilled
+  | typeof register.rejected
+  | typeof login.pending
+  | typeof login.fulfilled
+  | typeof login.rejected
+  | typeof logout.pending
+  | typeof logout.fulfilled
+  | typeof logout.rejected
+  | typeof checkUserAuth.pending
+  | typeof checkUserAuth.fulfilled
+  | typeof checkUserAuth.rejected
+  | typeof updateUser.pending
+  | typeof updateUser.fulfilled
+  | typeof updateUser.rejected>;

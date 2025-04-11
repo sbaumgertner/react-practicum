@@ -10,10 +10,10 @@ export const onError = createAction<string, 'feed/onError'>('feed/onError');
 export const onClose = createAction('feed/onClose');
 export const onMessage = createAction<TOrdersResponse, 'feed/onMessage'>('feed/onMessage');
 
-export type FeedActionTypes = ReturnType<typeof connect>
-  | ReturnType<typeof disconnect>
-  | ReturnType<typeof onConnecting>
-  | ReturnType<typeof onError>
-  | ReturnType<typeof onMessage>
-  | ReturnType<typeof onOpen>
-  | ReturnType<typeof onClose>;
+export type FeedActionTypes = ReturnType<typeof connect
+  | typeof disconnect
+  | typeof onConnecting
+  | typeof onError
+  | typeof onMessage
+  | typeof onOpen
+  | typeof onClose>;

@@ -7,6 +7,6 @@ export const loadIngredients = createAsyncThunk<TIngredientsResponse>(
   api.getIngredients
 );
 
-export type IngredientsActionTypes = ReturnType<typeof loadIngredients.pending>
-  | ReturnType<typeof loadIngredients.fulfilled>
-  | ReturnType<typeof loadIngredients.rejected>;
+export type IngredientsActionTypes = ReturnType<typeof loadIngredients.pending
+  | typeof loadIngredients.fulfilled
+  | typeof loadIngredients.rejected>;

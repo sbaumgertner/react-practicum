@@ -70,6 +70,6 @@ export const burgerConstructorSlice = createSlice({
 export const { addIngredient, deleteIngredient, moveIngredient } = burgerConstructorSlice.actions;
 export const { getRecipe, getIngredientsCount, getPrice } = burgerConstructorSlice.selectors;
 
-export type BurgerConstructorActionTypes = ReturnType<typeof addIngredient>
-  | ReturnType<typeof deleteIngredient>
-  | ReturnType<typeof moveIngredient>;
+export type BurgerConstructorActionTypes = ReturnType<typeof addIngredient
+  | typeof deleteIngredient
+  | typeof moveIngredient>;

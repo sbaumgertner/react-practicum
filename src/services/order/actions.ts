@@ -33,9 +33,9 @@ export const getOrder = createAsyncThunk<OrderModel | undefined, number>(
   }
 );
 
-export type OrderActionTypes = ReturnType<typeof createOrder.pending>
-  | ReturnType<typeof createOrder.fulfilled>
-  | ReturnType<typeof createOrder.rejected>
-  | ReturnType<typeof getOrder.pending>
-  | ReturnType<typeof getOrder.fulfilled>
-  | ReturnType<typeof getOrder.rejected>;
+export type OrderActionTypes = ReturnType<typeof createOrder.pending
+  | typeof createOrder.fulfilled
+  | typeof createOrder.rejected
+  | typeof getOrder.pending
+  | typeof getOrder.fulfilled
+  | typeof getOrder.rejected>;

@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from '../../services/store';
 import { getOrdersError, getOrdersList } from '../../services/feed/reducer';
 import { connect, disconnect } from '../../services/feed/actions';
 import { ORDERS_URL } from '../../utils/burger-api';
-import { OrdersListModel } from '../../model';
 import OrdersList from '../../components/orders-list/orders-list';
 import clsx from 'clsx';
 import { Outlet, useParams } from 'react-router';
@@ -15,7 +14,7 @@ export function FeedPage() {
   const dispatch = useDispatch();
   const error = useSelector(getOrdersError);
   const { number } = useParams();
-  const ordersList: OrdersListModel = useSelector(getOrdersList);
+  const ordersList = useSelector(getOrdersList);
 
   const doneOrderNumbers = ordersList.orders.filter(order => order.status === 'done')
     .slice(0, 10)

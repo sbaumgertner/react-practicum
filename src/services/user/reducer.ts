@@ -104,6 +104,6 @@ export const {
 
 export const { setIsAuthChecked, setUser, resetError } = userSlice.actions;
 
-export type UserReducerActionTypes = ReturnType<typeof setIsAuthChecked>
-  | ReturnType<typeof setUser>
-  | ReturnType<typeof resetError>;
+export type UserReducerActionTypes = ReturnType<typeof setIsAuthChecked
+  | typeof setUser
+  | typeof resetError>;

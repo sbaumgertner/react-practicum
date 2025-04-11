@@ -10,10 +10,10 @@ export const onError = createAction<string, 'orders/onError'>('orders/onError');
 export const onClose = createAction('orders/onClose');
 export const onMessage = createAction<TOrdersResponse, 'orders/onMessage'>('orders/onMessage');
 
-export type OrdersActionTypes = ReturnType<typeof connect>
-  | ReturnType<typeof disconnect>
-  | ReturnType<typeof onConnecting>
-  | ReturnType<typeof onError>
-  | ReturnType<typeof onMessage>
-  | ReturnType<typeof onOpen>
-  | ReturnType<typeof onClose>;
+export type OrdersActionTypes = ReturnType<typeof connect
+  | typeof disconnect
+  | typeof onConnecting
+  | typeof onError
+  | typeof onMessage
+  | typeof onOpen
+  | typeof onClose>;
