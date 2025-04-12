@@ -51,7 +51,7 @@ function BurgerConstructor() {
   }
 
   return (
-    <section ref={dropTarget} className={styles.Section}>
+    <section ref={dropTarget} className={styles.Section} data-testid="burger-constructor">
       {recipe.wrap ? (<ConstructorElement
         type="top"
         isLocked={true}
@@ -87,7 +87,7 @@ function BurgerConstructor() {
         </div>
       )
       }
-      <div className={styles.Order}>
+      <div className={styles.Order} data-testid="create-order">
         <span className={styles.Price}>
           {price}
           <CurrencyIcon className="largeicon" type="primary" />

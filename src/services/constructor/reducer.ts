@@ -1,7 +1,7 @@
 import { createSelector, createSlice, nanoid, PayloadAction } from '@reduxjs/toolkit';
 import { BurgerRecipeModel, ConstructorIngredientModel, IngredientModel } from '../../model';
 
-const initialState: { recipe: BurgerRecipeModel } = {
+export const initialState: { recipe: BurgerRecipeModel } = {
   recipe: {
     stuff: []
   }

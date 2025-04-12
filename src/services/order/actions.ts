@@ -16,7 +16,7 @@ export const createOrder = createAsyncThunk<OrderModel | undefined, string[]>(
         await updateTokens();
         const newToken = getAccessToken();
         if (newToken) {
-          const { order } = await api.createOrder(ingredients, token);
+          const { order } = await api.createOrder(ingredients, newToken);
           return order;
         }
       }

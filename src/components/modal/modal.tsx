@@ -31,8 +31,8 @@ function Modal({ header, headerClass, children, onClose }: ModalProps) {
   return createPortal(
     (
       <>
-        <div className={styles.Modal}>
-          <header className={styles.Header}>
+        <div className={styles.Modal} data-testid="modal">
+          <header className={styles.Header} data-testid="modal-header">
             <h1 className={headerClass}>{header}</h1>
             <CloseIcon type="primary" onClick={onClose} className={styles.Close} />
           </header>
