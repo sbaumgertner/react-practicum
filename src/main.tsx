@@ -4,7 +4,7 @@ import App from './components/app/app.tsx';
 import './index.less';
 import { configureStore } from './services/store';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
 const store = configureStore();
 
