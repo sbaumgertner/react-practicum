@@ -1,34 +1,41 @@
-# Burger Constructor
+# React Burger Constructor (Yandex Practicum Project)
 
-This is a training project of the React developer course from Yandex Practicum
+A frontend burger construction application built as part of the Yandex Practicum React Developer course. This project implements user authentication, ingredient browsing, burger building, and order management.
 
-# React + TypeScript + Vite
+## Features
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### User System
+- User registration and authentication
+- Password recovery functionality
+- Profile viewing and editing
 
-Currently, two official plugins are available:
+### Burger Construction
+- Browse available ingredients
+- Drag-and-drop interface for building burgers
+- View detailed ingredient information in modal windows
+- Place orders with constructed burgers
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Order Management
+- View all orders (general feed)
+- View personal order history
+- Detailed order information in modal windows
 
-## Expanding the ESLint configuration
+## Technical Implementation
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Frontend
+- Built with **React** and **TypeScript**
+- Bundled with **Vite** for fast development
+- UI with CSS modules
 
-- Configure the top-level `parserOptions` property like this:
+### Testing
+- Unit tests with **Vitest**
+- E2E testing with **Cypress**
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+### Backend Integration
+- Connects to a dedicated backend API for all data operations
+- Implements protected routes for authenticated users
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Live Demo
+
+The application is deployed and available at:  
+[https://sbaumgertner.github.io/react-practicum/](https://sbaumgertner.github.io/react-practicum/)

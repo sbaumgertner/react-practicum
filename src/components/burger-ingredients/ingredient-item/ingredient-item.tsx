@@ -18,7 +18,7 @@ function IngredientItem({ id, image, name, price, count = 0 }: IngredientItemPro
   });
 
   return (
-    <div ref={dragRef} className={styles.Ingredient}>
+    <div ref={dragRef} className={styles.Ingredient} data-testid={id}>
       <img src={image} alt={name} />
       <div className={styles.Price}>
         <span>{price}</span>
