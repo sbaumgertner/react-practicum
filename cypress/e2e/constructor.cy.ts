@@ -2,12 +2,17 @@ import type {} from 'cypress';
 import ingredientsData from '../fixtures/ingredients.json';
 import orderData from '../fixtures/order.json';
 
+const SELECTORS = {
+  CONSTRUCTOR: '[data-testid="burger-constructor"]',
+  MODAL: '[data-testid="modal"]',
+};
+
 describe('BurgerConstructor', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/auth/user', { fixture: 'user'});
     cy.intercept('GET', '/api/ingredients', { fixture: 'ingredients'});
     cy.intercept('POST', '/api/orders', { fixture: 'order'}).as('orderPost');
-    cy.visit('http://localhost:5173/');
+    cy.visit('/');
     window.localStorage.setItem('accessToken', JSON.stringify('TestAccessToken'));
     window.localStorage.setItem('refreshToken', JSON.stringify('TestRefreshToken'));
   });
@@ -18,7 +23,7 @@ describe('BurgerConstructor', () => {
     const sauce = ingredients.find(ingredient => ingredient.type === 'sauce')!;
     const main = ingredients.find(ingredient => ingredient.type === 'main')!;
 
-    cy.get('[data-testid="burger-constructor"]').as('constructor');
+    cy.get(SELECTORS.CONSTRUCTOR).as('constructor');
 
     cy.get(`[data-testid="${buns[0]._id}"]`).trigger('dragstart');
     cy.get('@constructor').trigger('drop');
@@ -35,15 +40,16 @@ describe('BurgerConstructor', () => {
     cy.get('@constructor').trigger('drop');
     cy.get(`[data-testid="${main._id}"]`).trigger('dragstart');
     cy.get('@constructor').trigger('drop');
-    cy.get('@constructor').find('.constructor-element').should('contain.text', sauce.name);
-    cy.get('@constructor').find('.constructor-element').should('contain.text', main.name);
+    cy.get('@constructor').find('.constructor-element').as('constructor-element');
+    cy.get('@constructor-element').should('contain.text', sauce.name);
+    cy.get('@constructor-element').should('contain.text', main.name);
   });
 
   it('open and close ingredient details modal', () => {
     const ingredient = ingredientsData.data[0];
 
     cy.get(`[data-testid="${ingredient._id}"]`).click();
-    cy.get('[data-testid="modal"]').should('exist').as('modal');
+    cy.get(SELECTORS.MODAL).should('exist').as('modal');
 
     cy.get('@modal').should('contain.text', ingredient.name);
     cy.get('@modal').should('contain.text', ingredient.proteins);
@@ -53,11 +59,11 @@ describe('BurgerConstructor', () => {
     cy.get('@modal').find('img').should('have.attr', 'src', ingredient.image_large);
 
     cy.get('[data-testid="modal-header"]').find('svg').click();
-    cy.get('[data-testid="modal"]').should('not.exist');
+    cy.get('@modal').should('not.exist');
 
     cy.get(`[data-testid="${ingredient._id}"]`).click();
     cy.get('[data-testid="modal-overlay"]').click({force: true});
-    cy.get('[data-testid="modal"]').should('not.exist');
+    cy.get('@modal').should('not.exist');
   });
 
   it('create order', () => {
@@ -66,7 +72,7 @@ describe('BurgerConstructor', () => {
     const sauce = ingredients.find(ingredient => ingredient.type === 'sauce')!;
     const main = ingredients.find(ingredient => ingredient.type === 'main')!;
 
-    cy.get('[data-testid="burger-constructor"]').as('constructor');
+    cy.get(SELECTORS.CONSTRUCTOR).as('constructor');
     cy.get(`[data-testid="${bun._id}"]`).trigger('dragstart');
     cy.get('@constructor').trigger('drop');
     cy.get(`[data-testid="${sauce._id}"]`).trigger('dragstart');
@@ -76,7 +82,7 @@ describe('BurgerConstructor', () => {
 
     cy.get('[data-testid="create-order"]').find('.button').click();
     cy.wait('@orderPost').then(() => {
-      cy.get('[data-testid="modal"]').should('exist').as('modal');
+      cy.get(SELECTORS.MODAL).should('exist').as('modal');
       cy.get('@modal').should('contain.text', orderData.order.number);
     });
   });
